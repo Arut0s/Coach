@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtTaille;
     private EditText txtAge;
     private RadioButton rdHomme;
+    private RadioButton rdFemme;
     private TextView lblIMG;
     private ImageView imgSmiley;
     private Button btnCalc;
@@ -47,11 +48,13 @@ public class MainActivity extends AppCompatActivity {
         txtTaille = (EditText) findViewById(R.id.txtTaille);
         txtAge = (EditText) findViewById(R.id.txtAge);
         rdHomme = (RadioButton) findViewById(R.id.rdHomme);
+        rdFemme = (RadioButton) findViewById(R.id.rdFemme);
         lblIMG = (TextView) findViewById(R.id.lblIMG);
         imgSmiley = (ImageView) findViewById(R.id.imgSmiley);
         btnCalc = (Button) findViewById(R.id.btnCalc);
-        controle = Controle.getInstance();
+        controle = Controle.getInstance(this);
         ecouteCalcul();
+        recupProfil();
     }
 
     /**
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
      * @param sexe 1 pour homme, 0 pour femme
      */
     private void affichResult(int poids, int taille, int age, int sexe){
-        controle.creerProfil(poids, taille, age, sexe);
+        controle.creerProfil(poids, taille, age, sexe, this);
         float img = controle.getImg();
         String message = controle.getMessage();
         switch(message){
@@ -104,5 +107,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         lblIMG.setText(String.format("%.01f",img)+" : IMG "+message);
+    }
+
+    /**
+     * Recupère les infos d'un profil et les affiche
+     */
+    private void recupProfil(){
+        if(controle.getTaille() != null){
+            txtPoids.setText(controle.getPoids().toString());
+            txtTaille.setText(controle.getTaille().toString());
+            txtAge.setText(controle.getAge().toString());
+            if(controle.getSexe() == 0){
+                rdFemme.setChecked(true);
+            }else{
+                rdHomme.setChecked(true);
+            }
+            btnCalc.performClick();
+        }
     }
 }
