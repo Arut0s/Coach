@@ -7,22 +7,25 @@ import java.util.Date;
 public abstract class MesOutils {
 
     /**
-     * Permet de convertir un String en Date
-     * @param uneDate
-     * @return Date
+     * Conversion d'une date du format String vers le format Date avec un format reçu
+     * @param uneDate au format String
+     * @param expectedPattern
+     * @return la date au format date
      */
-    public static Date convertStringToDate(String uneDate){
-        String expectedPattern = "EEE MMM dd hh:mm:ss 'GMT+00:00' yyyy";
+    public static Date convertStringToDate(String uneDate, String expectedPattern){
         SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
         try {
             Date date = formatter.parse(uneDate);
-            return date;
-        } catch (ParseException e) {
+                return date;
+            }catch(ParseException e){
             e.printStackTrace();
         }
-        return null;
-    }
+            return null;
+        }
 
+        public static Date convertStringToDate(String uneDate){
+        return convertStringToDate(uneDate, "EEE MMM dd hh:mm:ss 'GMT+00:00' yyyy");
+        }
     /**
      * Permet de convertir une Date en String
      * @param uneDate
