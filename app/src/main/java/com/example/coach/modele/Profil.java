@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * Classe métier Profil : contient les informations du profil
  */
-public class Profil implements Serializable {
+public class Profil implements Serializable, Comparable {
 
     //constantes
     private static final Integer minFemme = 15; //maigre si en dessous
@@ -117,4 +117,8 @@ public class Profil implements Serializable {
 
     }
 
+    @Override
+    public int compareTo(Object o) {
+        return dateMesure.compareTo(((Profil)o).getDateMesure());
+    }
 }
